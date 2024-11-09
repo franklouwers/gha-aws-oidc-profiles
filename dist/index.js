@@ -46705,7 +46705,7 @@ async function assumeRoleWithOIDC(roleArn, sessionName, awsRegion) {
     const creds = await stsClient.send(new AssumeRoleWithWebIdentityCommand({
         RoleArn: roleArn,
         RoleSessionName: sessionName,
-        WebIdentityTokenFile: idToken,
+        WebIdentityToken: idToken,
     }));
 
     console.log('assumed role with OIDC');
