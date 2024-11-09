@@ -14,7 +14,7 @@ This GitHub Action sets up an AWS profile using OpenID Connect (OIDC) authentica
 ### Example
 
 ```yaml
-uses: ./.github/actions/setup-oidc-aws-profile
+uses: wonko/gha-aws-oidc-profiles@v0.1
 with:
   profile-name: my-profile
   role-to-assume: arn:aws:iam::123456789012:role/my-role
