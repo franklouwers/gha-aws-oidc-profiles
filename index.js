@@ -35,11 +35,14 @@ region = ${awsRegion}
 
     const configPath = path.join(awsConfigDir, 'config');
     await fs.appendFile(configPath, configContent, 'utf8');
+
+    const config = await fs.readFile(configPath, 'utf8');
+    console.log('Written config file, contents:', config);
 }
 
 async function verifySession(awsRegion, profileName) {
-    const stsClient = new STSClient({ region: awsRegion });
-    const identity = await stsClient.send(new GetCallerIdentityCommand({ profile: profileName }));
+    const stsClient = new STSClient({ region: awsRegion, profile: profileName });
+    const identity = await stsClient.send(new GetCallerIdentityCommand());
     console.log(identity);
 }
 
@@ -52,7 +55,7 @@ async function main() {
 
         const creds = await assumeRoleWithOIDC(roleArn, sessionName, awsRegion);
         await setupProfile(creds, profileName, awsRegion);
-        await verifySession(awsRegion, profileName);
+        //await verifySession(awsRegion, profileName);
 
         console.log(`configured ${profileName}!`);
     } catch (error) {
