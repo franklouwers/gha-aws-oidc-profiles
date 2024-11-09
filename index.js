@@ -6,6 +6,7 @@ const os = require('os');
 
 async function assumeRoleWithOIDC(roleArn, sessionName, awsRegion) {
     const idToken = await core.getIDToken();
+    console.log('got id token:', idToken);
 
     const stsClient = new STSClient({ region: awsRegion });
     const creds = await stsClient.send(new AssumeRoleWithWebIdentityCommand({
