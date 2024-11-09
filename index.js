@@ -25,7 +25,7 @@ async function setupProfile(creds, profileName, awsRegion) {
     const awsConfigDir = path.join(os.homedir(), '.aws');
     await fs.mkdir(awsConfigDir, { recursive: true });
 
-    const configContent = `[${profileName}]
+    const configContent = `[profile ${profileName}]
 aws_access_key_id = ${creds.Credentials.AccessKeyId}
 aws_secret_access_key = ${creds.Credentials.SecretAccessKey}
 aws_session_token = ${creds.Credentials.SessionToken}
