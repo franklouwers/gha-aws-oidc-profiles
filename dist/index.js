@@ -46707,6 +46707,7 @@ async function assumeRoleWithOIDC(roleArn, sessionName, awsRegion) {
         WebIdentityTokenFile: idToken,
     }));
 
+    console.log('assumed role with OIDC');
     console.log(creds);
     return creds;
 }
@@ -46734,20 +46735,24 @@ async function verifySession(awsRegion) {
     console.log(identity);
 }
 
-try {
-    const profileName = core.getInput('profile-name');
-    const roleArn = core.getInput('role-to-assume');
-    const sessionName = core.getInput('session-name');
-    const awsRegion = core.getInput('aws-region');
+async function main() {
+    try {
+        const profileName = core.getInput('profile-name');
+        const roleArn = core.getInput('role-to-assume');
+        const sessionName = core.getInput('session-name');
+        const awsRegion = core.getInput('aws-region');
 
-    const creds = assumeRoleWithOIDC(roleArn, sessionName, awsRegion);
-    setupProfile(creds, profileName, awsRegion);
-    verifySession(awsRegion);
+        const creds = await assumeRoleWithOIDC(roleArn, sessionName, awsRegion);
+        await setupProfile(creds, profileName, awsRegion);
+        await verifySession(awsRegion);
 
-    console.log(`configured ${profileName}!`);
-} catch (error) {
-    core.setFailed(error.message);
+        console.log(`configured ${profileName}!`);
+    } catch (error) {
+        core.setFailed(error.message);
+    }
 }
+
+main();
 
 module.exports = __webpack_exports__;
 /******/ })()
