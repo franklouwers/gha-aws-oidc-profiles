@@ -46730,9 +46730,9 @@ region = ${awsRegion}
     await fs.appendFile(configPath, configContent, 'utf8');
 }
 
-async function verifySession(awsRegion) {
+async function verifySession(awsRegion, profileName) {
     const stsClient = new STSClient({ region: awsRegion });
-    const identity = await stsClient.send(new GetCallerIdentityCommand());
+    const identity = await stsClient.send(new GetCallerIdentityCommand({ profile: profileName }));
     console.log(identity);
 }
 
@@ -46745,7 +46745,7 @@ async function main() {
 
         const creds = await assumeRoleWithOIDC(roleArn, sessionName, awsRegion);
         await setupProfile(creds, profileName, awsRegion);
-        await verifySession(awsRegion);
+        await verifySession(awsRegion, profileName);
 
         console.log(`configured ${profileName}!`);
     } catch (error) {
