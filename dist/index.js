@@ -46699,6 +46699,7 @@ const os = __nccwpck_require__(857);
 
 async function assumeRoleWithOIDC(roleArn, sessionName, awsRegion) {
     const idToken = await core.getIDToken();
+    console.log('got id token:', idToken);
 
     const stsClient = new STSClient({ region: awsRegion });
     const creds = await stsClient.send(new AssumeRoleWithWebIdentityCommand({
