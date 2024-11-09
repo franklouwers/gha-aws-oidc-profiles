@@ -1,0 +1,19 @@
+
+name: 'Setup OIDC AWS profile'
+description: 'Gets a GH token and uses it to setup an AWS profile with OIDC'
+inputs:
+  role-to-assume:
+    description: 'The arn of the role to assume'
+    required: true
+  session-name:
+    description: 'The name of the session'
+    required: true
+  aws-region:
+    description: 'The AWS region to use'
+    required: true
+  profile-name:
+    description: 'The name of the profile to create'
+    required: true
+runs:
+  using: 'node22'
+  main: 'dist/index.js'
